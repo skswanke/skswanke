@@ -6,18 +6,27 @@ on:
   workflow_dispatch:
   push: {branches: ["main"]}
 
+permissions:
+  contents: write
+
 jobs:
 
   achievements:
     runs-on: ubuntu-latest
     steps:
-      - uses: lowlighter/metrics@latest
+      - uses: actions/checkout@v4
+      - name: Build Metrics with GitHub API compatibility fixes
+        run: docker build -t metrics:3.34.0 .github/metrics
+      - uses: lowlighter/metrics@65836723097537a54cd8eb90f61839426b4266b6 # v3.34
         with:
+          plugins_errors_fatal: yes
+          # Use the patched local image; pulling the prebuilt tag discards the fixes.
+          use_prebuilt_image: no
           filename: achievements.svg
           token: ${{ secrets.METRICS_SECRET }}
           committer_token: ${{ secrets.GITHUB_TOKEN }}
           user: skswanke
-          base: achievements
+          base: ""
           plugin_achievements: yes
           plugin_achievements_threshold: B      # Display achievements with rank B or higher
           plugin_achievements_secrets: yes      # Display unlocked secrets achievements
@@ -27,8 +36,9 @@ jobs:
   github-metrics:
     runs-on: ubuntu-latest
     steps:
-      - uses: lowlighter/metrics@latest
+      - uses: lowlighter/metrics@65836723097537a54cd8eb90f61839426b4266b6 # v3.34
         with:
+          plugins_errors_fatal: yes
           filename: header.svg
           # You'll need to setup a personal token in your secrets.
           token: ${{ secrets.METRICS_SECRET }}
@@ -43,8 +53,9 @@ jobs:
   lines:
     runs-on: ubuntu-latest
     steps:
-      - uses: lowlighter/metrics@latest
+      - uses: lowlighter/metrics@65836723097537a54cd8eb90f61839426b4266b6 # v3.34
         with:
+          plugins_errors_fatal: yes
           filename: lines-of-code.svg
           token: ${{ secrets.METRICS_SECRET }}
           committer_token: ${{ secrets.GITHUB_TOKEN }}
@@ -54,8 +65,9 @@ jobs:
   acti_comm:
     runs-on: ubuntu-latest
     steps:
-      - uses: lowlighter/metrics@latest
+      - uses: lowlighter/metrics@65836723097537a54cd8eb90f61839426b4266b6 # v3.34
         with:
+          plugins_errors_fatal: yes
           filename: acti_comm.svg
           # You'll need to setup a personal token in your secrets.
           token: ${{ secrets.METRICS_SECRET }}
@@ -71,8 +83,9 @@ jobs:
   iso_calender:
     runs-on: ubuntu-latest
     steps:
-      - uses: lowlighter/metrics@latest
+      - uses: lowlighter/metrics@65836723097537a54cd8eb90f61839426b4266b6 # v3.34
         with:
+          plugins_errors_fatal: yes
           filename: iso_calender.svg
           # You'll need to setup a personal token in your secrets.
           token: ${{ secrets.METRICS_SECRET }}
@@ -90,8 +103,14 @@ jobs:
   habits:
     runs-on: ubuntu-latest
     steps:
-      - uses: lowlighter/metrics@latest
+      - uses: actions/checkout@v4
+      - name: Build Metrics with GitHub API compatibility fixes
+        run: docker build -t metrics:3.34.0 .github/metrics
+      - uses: lowlighter/metrics@65836723097537a54cd8eb90f61839426b4266b6 # v3.34
         with:
+          plugins_errors_fatal: yes
+          # Use the patched local image; pulling the prebuilt tag discards the fixes.
+          use_prebuilt_image: no
           filename: github-habits.svg
           token: ${{ secrets.METRICS_SECRET }}
           committer_token: ${{ secrets.GITHUB_TOKEN }}
@@ -108,8 +127,9 @@ jobs:
   issue_pr_lang:
     runs-on: ubuntu-latest
     steps:
-      - uses: lowlighter/metrics@latest
+      - uses: lowlighter/metrics@65836723097537a54cd8eb90f61839426b4266b6 # v3.34
         with:
+          plugins_errors_fatal: yes
           filename: issue_pr_lang.svg
           # You'll need to setup a personal token in your secrets.
           token: ${{ secrets.METRICS_SECRET }}
@@ -128,8 +148,9 @@ jobs:
   repositories:
     runs-on: ubuntu-latest
     steps:
-      - uses: lowlighter/metrics@latest
+      - uses: lowlighter/metrics@65836723097537a54cd8eb90f61839426b4266b6 # v3.34
         with:
+          plugins_errors_fatal: yes
           filename: repositories.svg
           # You'll need to setup a personal token in your secrets.
           token: ${{ secrets.METRICS_SECRET }}
