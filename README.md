@@ -18,8 +18,8 @@
 </a>
 
 <a href="https://github.com/skswanke">
-  <img align="center" width="49%" src="./github-habits.svg" />
+  <img align="center" width="49%" src="./github-habits.svg?v=20260929-api-fix" />
 </a>
 <a href="https://github.com/skswanke">
-    <img align="center" width="49%" src="./achievements.svg" />
+    <img align="center" width="49%" src="./achievements.svg?v=20260929-api-fix" />
 </a>
